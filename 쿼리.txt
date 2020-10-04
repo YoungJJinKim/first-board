@@ -1,0 +1,39 @@
+CREATE TABLE member(
+	no NUMBER NOT NULL ENABLE primary key , 
+	memberid varchar2(200) NOT NULL ENABLE, 
+	password varchar2(200) NOT NULL ENABLE
+);
+
+CREATE TABLE post(
+   postid NUMBER NOT NULL ENABLE primary key , 
+   title varchar2(200) NOT NULL ENABLE, 
+    memberid varchar2(200) NOT NULL ENABLE, 
+    attach varchar2(200) default null,
+    created_date timestamp(6) default sysdate,
+	updated_date timestamp(6) default sysdate,
+   contents varchar2(200) NOT NULL ENABLE,
+   VIEWCOUNT NUMBER DEFAULT 0,
+    RECOMMENDED NUMBER DEFAULT 0,
+    M_RECOMMENDED number default 0
+); 
+CREATE TABLE reply_maria(
+	replyid NUMBER NOT NULL ENABLE primary key , 
+    postid NUMBER NOT NULL ENABLE,
+	memberid varchar2(200) NOT NULL ENABLE, 
+	comments clob NOT NULL ENABLE
+);
+create table rlist(
+no number not null enable primary key,
+memberid varchar2(200) not null enable,
+postid number not null enable
+);
+
+ALTER TABLE rlist
+	ADD CONSTRAINT FK_post_TO_rlist -- 회원 -> 상품
+	FOREIGN KEY (
+		postid -- 회원번호
+	)
+	REFERENCES post ( -- 회원
+		postid -- 회원번호
+	);
+

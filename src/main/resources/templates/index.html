@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org" th:replace="~{layout::layout(~{::title},~{::section},_)}">
+
+<head>
+	<meta charset="UTF-8">
+	<title>게시글 리스트</title>
+</head>
+
+<body>
+	
+	
+
+	<section>
+		게시글 리스트 화면<br>
+		<!-- <ul>
+			<li  style="display:flex;">
+				<p>번호</p>
+				<p>제목</p>	
+			</li>
+			<li th:each="post: ${postList}" style="display:flex;">
+				<p th:text="${post.getPostid()}"></p>
+				<a href="/" th:href="@{/posts/{postid}(postid=${post.getPostid()})}">
+					<p th:text="${post.getTitle()}"></p>
+				</a>
+
+			</li>
+		</ul> -->
+		<a href="/posts/sortviewcount">조회순</a><a>|</a><a href="/posts/sortrecommended">추천순</a>
+		<div class="container-fluid">
+			<div class="row">
+				<table border="1">
+					<thead>
+						<tr class="warning">
+							<th class="col-sm-1">번호</th>
+							<th class="col-sm-5">제목</th>
+							<!-- <th class="col-sm-3">작성 날짜</th>
+							<th class="col-sm-3">수정 날짜</th> -->
+							<th class="col-sm-3">글쓴이이름</th>
+							<th class="col-sm-3">작성일</th>
+							<th class="col-sm-3">일반추천</th>
+							<th class="col-sm-3">전문가추천</th>
+							<th class="col-sm-3">조회수</th>
+							<th class="col-sm-3">카테고리</th>
+
+						</tr>
+					</thead>
+					<tbody>
+						<tr th:each="post : ${postList}">
+							<td th:text="${post.getPostid()}"></td>
+							<td><a th:href="@{/posts/{postid}(postid=${post.getPostid()})}" th:text="${post.getTitle()}"></a></td>
+							<!-- <td th:text="${post.getCREATED_DATE()}"></td> -->
+							<!-- <td th:text="${post.UPDATED_DATE}"></td> -->
+							<!-- <td><fmt value="${post.UPDATED_DATE}" pattern="yyyy-MM-dd"></fmt></td> -->
+							<!-- <td th:text="${#dates.format(post.CREATED_DATE, 'yyyy-MM-dd')}"></td> -->
+							<!-- <td th:text="${#temporals.format(post.getCREATED_DATE(), 'yyyy-MM-dd HH:mm:dd')}"></td> -->
+							<!-- <td th:text="${#temporals.format(post.getUPDATED_DATE(), 'yyyy-MM-dd HH:mm:dd')}"></td> -->
+							<td th:text="${post.Memberid}"></td>
+							<td th:text="${post.getCREATED_DATE()}"></td>
+
+							<td th:text="${post.Recommended}"></td>
+							<td th:text="${post.Mrecommended}"></td>
+							<td th:text="${post.Viewcount}"></td>
+							<td th:text="${post.cate}"></td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		</div>
+		<a href="/posts/create">글쓰기</a>
+	</section>
+</body>
+
+</html>

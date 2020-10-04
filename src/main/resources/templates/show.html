@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org"
+xmlns:sec="http://www.thymeleaf.org/extras/spring-secutiry"
+th:replace="~{layout::layout(~{::title},~{::section},~{::script})}">
+<head>
+<meta charset="UTF-8">
+<script th:src="@{/show.js}"></script>
+<!-- <script th:src="@{https://code.jquery.com/jquery-1.12.4.js}"></script> -->
+<!-- <script th:src="@{/jquery-3.5.1.min.js}"></script> -->
+<title>글</title>
+</head>
+<body>
+	<section>
+	
+
+
+		<br>
+		<input type="hidden" id="postid" name="" value="13" th:value="${post.postid}">
+		제목 <span th:text="${post.getTitle()}"></span><br>
+		내용 <span th:text="${post.getContents()}"></span><br>
+		작성자 <span th:text="${post.getMemberid()}"></span><br>
+		<th:block th:if="${post.getAttach()}">
+			<br><img th:src="@{'/uploads/'+${post.getAttach()}}"/><br>
+		</th:block>
+		<button type="button" id="recommend" >추천</button>
+
+		
+		<!-- 일반추천
+		<a id="recommended" th:text="${post.Recommended}"></a>
+		전문가추천
+		<a id="recommended" th:text="${post.Mrecommended}"></a>
+		<br> -->
+
+
+
+		<th:block th:if="${post.getMemberid() eq #authentication.principal.username}">
+			<a th:href="@{/posts/{postid}/modify(postid=${post.getPostid()})}">수정</a>
+			<input type="hidden" class="token" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
+			<button type="button" th:onclick="'deletePost('+ ${post.getPostid()} + ')'">삭제</button>
+		</th:block>
+		
+		<br><br>
+			<textArea type="text" class="reply" required></textArea>
+			<input type="hidden" class="token" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
+			<button type="button" th:onclick="'addReply('+${post.getPostid()}+')'">댓글 등록</button>
+		
+
+	<h3>Comment</h3>
+				<input type="hidden" class="Reply_token" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
+		<div>
+			<ul class="replyUl">
+			 	<li th:each="reply : ${replyList}">
+			 	<!-- ${#authentication.principal.id} -->
+			 		<div th:class="'div'+${reply.getReplyid()}" th:if="${reply.getMemberid() eq #authentication.principal.username}">
+			 			<p th:text="${reply.memberid}"></p>
+			 			<pre th:class="'answer'+${reply.getReplyid()}" th:text="${reply.getComment()}"></pre>
+			 			<button type="button" th:onclick="'modi_click('+${reply.getReplyid()}+','+${post.getPostid()}+')'">수정</button>
+			 			<button type="button" th:onclick="'delete_ans('+${reply.getReplyid()}+','+${post.getPostid()}+')'">삭제</button>	
+			 		</div>
+			 		<div th:unless="${reply.getMemberid() eq #authentication.principal.username}">
+						<p th:text="${reply.memberid}"></p>
+			 			<pre th:text="${reply.getComment()}"></pre>	
+			 		</div>
+			 	</li>
+			</ul>
+		</div>
+	</section>
+</body>
+</html>

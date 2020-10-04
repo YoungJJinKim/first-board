@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org"
+th:replace="~{layout::layout(~{::title},~{::section},~{::script})}">
+<head>
+<meta charset="UTF-8">
+<title>글 수정</title>
+<script th:src="@{/modify.js}"></script>
+<!-- <script th:src="@{https://code.jquery.com/jquery-1.12.4.js}"></script> -->
+<script th:src="@{ /jquery-3.5.1.min.js  }"></script>
+
+</head>
+<body>
+	<section>
+		<!-- 제목 :<input type="text" class="title" th:value="${post.getTitle()}"/><br><br>
+		내용  <br>
+		<textArea type="text"  class="content" th:text="${post.getContents()}" escapeXml="false"></textArea><br><br>
+		<input type="hidden" class="token" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
+		
+		<button type="button" th:onclick="'modify('+ ${post.getPostid()} + ')'">수정 완료</button> -->
+		
+		<form method="POST" enctype="multipart/form-data" th:action="@{/posts/{postid}(postid=${post.getPostid()})}">
+			제목 :<input type="text" class="title" name="title" th:value="${post.getTitle()}"/><br><br>
+			내용  <br>
+			<textArea type="text"  class="content" name="content" th:text="${post.getContents()}" escapeXml="false"></textArea><br><br>
+
+			<input type="hidden" class="token" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
+
+			이미지 첨부: <input type="file" name="file" /><br>   
+			<input type="submit" value="글 수정"/>
+		</form>
+		
+	</section>
+</body>
+</html>
